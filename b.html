@@ -35,6 +35,10 @@
             overflow: hidden;
             height: 100%;
         }
+
+        .card-body{
+          background-image: url();
+        }
         
         .feature-card:hover {
             transform: translateY(-10px);
@@ -147,11 +151,13 @@
                                         <option value="">Select Soil Type</option>
                                         <option>Alluvial</option>
                                         <option>Black (Regur)</option>
-                                        <option>Red</option>
+                                        <option>Clayey</option>
                                         <option>Laterite</option>
                                         <option>Loamy</option>
-                                        <option>Sandy</option>
-                                        <option>Clayey</option>
+                                        <option>Peaty</option>
+                                        <option>Perennial</option>
+                                        <option>Red</option>
+                                        <option>Sandy</option>                 
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -177,9 +183,9 @@
                         <div class="card-header bg-success text-white">
                             <h4 class="mb-0">Recommended Crops</h4>
                         </div>
-                        <div class="card-body">
+                        <div style="display: flex;justify-content: center;align-items: center;"class="card-body">
                             <div class="text-center py-4" id="resultPlaceholder">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3163/3163473.png" width="100" alt="Recommendation">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3163/3163473.png" width="200" alt="Recommendation">
                                 <p class="mt-3">Fill the form to get crop recommendations</p>
                             </div>
                             <div id="recommendationResults" style="display: none;">
@@ -347,7 +353,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 25,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Maize",
@@ -357,12 +363,13 @@
         rainfall_requirements: [60, 120],
         ph_range: [5.5, 7.0],
         yield_per_acre: 30,
-        image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoeAK_Kb2ZpDx3P-7i1N8E6kQQw1TCPr8xlg&s"
       }
     ],
     best_markets: ["Vijayawada"],
     climate: "Tropical",
     coordinates: [15.9129, 79.7400]
+    
   },
   {
     name: "Arunachal Pradesh",
@@ -376,7 +383,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 20,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Maize",
@@ -386,7 +393,7 @@
         rainfall_requirements: [60, 120],
         ph_range: [5.5, 7.0],
         yield_per_acre: 18,
-        image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoeAK_Kb2ZpDx3P-7i1N8E6kQQw1TCPr8xlg&s"
       }
     ],
     best_markets: ["Itanagar"],
@@ -405,7 +412,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 22,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Tea",
@@ -415,7 +422,7 @@
         rainfall_requirements: [120, 250],
         ph_range: [4.5, 5.5],
         yield_per_acre: 1500,
-        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+        image: "https://img500.exportersindia.com/product_images/bc-500/2023/2/6888152/dried-tea-leaves-1676457294-6763867.jpeg"
       }
     ],
     best_markets: ["Guwahati"],
@@ -434,7 +441,7 @@
         rainfall_requirements: [50, 100],
         ph_range: [6.0, 7.5],
         yield_per_acre: 18,
-        image: "https://images.unsplash.com/photo-1601593768793-21c6e6cc18b8"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoeAK_Kb2ZpDx3P-7i1N8E6kQQw1TCPr8xlg&s"
       },
       {
         name: "Maize",
@@ -444,7 +451,7 @@
         rainfall_requirements: [60, 120],
         ph_range: [5.5, 7.0],
         yield_per_acre: 20,
-        image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoeAK_Kb2ZpDx3P-7i1N8E6kQQw1TCPr8xlg&s"
       }
     ],
     best_markets: ["Patna"],
@@ -463,7 +470,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 24,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Pulses",
@@ -473,7 +480,7 @@
         rainfall_requirements: [40, 60],
         ph_range: [6.0, 7.5],
         yield_per_acre: 8,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://chrysalishigh.com/wp-content/uploads/2024/01/pulses.jpg"
       }
     ],
     best_markets: ["Raipur"],
@@ -492,7 +499,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 20,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Cashew",
@@ -502,7 +509,7 @@
         rainfall_requirements: [100, 200],
         ph_range: [5.0, 6.5],
         yield_per_acre: 10,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://media.istockphoto.com/id/171356441/photo/cashews.jpg?s=612x612&w=0&k=20&c=ixKBUXUafuqtAAgkUYbzZXBA6BrwJNfpGnlQUXjYlq4="
       }
     ],
     best_markets: ["Panaji"],
@@ -521,7 +528,7 @@
         rainfall_requirements: [50, 120],
         ph_range: [6.0, 7.0],
         yield_per_acre: 9,
-        image: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716"
+        image: "https://thumbs.dreamstime.com/b/process-making-cotton-raw-cotton-basket-66651270.jpg"
       },
       {
         name: "Groundnut",
@@ -531,7 +538,7 @@
         rainfall_requirements: [50, 100],
         ph_range: [6.0, 7.5],
         yield_per_acre: 8,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://www.jiomart.com/images/product/original/590002405/roasted-groundnut-500-g-product-images-o590002405-p590910373-0-202412250841.jpg?im=Resize=(420,420)"
       }
     ],
     best_markets: ["Ahmedabad"],
@@ -550,7 +557,7 @@
         rainfall_requirements: [50, 100],
         ph_range: [6.0, 7.5],
         yield_per_acre: 20,
-        image: "https://images.unsplash.com/photo-1601593768793-21c6e6cc18b8"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFicsW1fD9qPBlWRhlBFd0ASiamvOswSgP6w&s"
       },
       {
         name: "Rice",
@@ -560,7 +567,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 22,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       }
     ],
     best_markets: ["Karnal"],
@@ -579,7 +586,7 @@
         rainfall_requirements: [100, 125],
         ph_range: [5.5, 6.5],
         yield_per_acre: 10,
-        image: "https://images.unsplash.com/photo-1502741338009-cac2772e18bc"
+        image: "https://img.lb.wbmdstatic.com/vim/live/webmd/consumer_assets/site_images/articles/health_tools/healing_foods_slideshow/1800ss_getty_rf_apples.jpg?resize=750px:*&output-quality=75"
       },
       {
         name: "Maize",
@@ -589,7 +596,7 @@
         rainfall_requirements: [60, 120],
         ph_range: [5.5, 7.0],
         yield_per_acre: 15,
-        image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoeAK_Kb2ZpDx3P-7i1N8E6kQQw1TCPr8xlg&s"
       }
     ],
     best_markets: ["Shimla"],
@@ -608,7 +615,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 18,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Pulses",
@@ -618,7 +625,7 @@
         rainfall_requirements: [40, 60],
         ph_range: [6.0, 7.5],
         yield_per_acre: 7,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://chrysalishigh.com/wp-content/uploads/2024/01/pulses.jpg"
       }
     ],
     best_markets: ["Ranchi"],
@@ -637,7 +644,7 @@
         rainfall_requirements: [50, 100],
         ph_range: [5.5, 7.0],
         yield_per_acre: 8,
-        image: "https://images.unsplash.com/photo-1595433562696-a39b1b5c9a0e"
+        image: "https://aarogyamastu.in/wp-content/uploads/2022/06/fingermillet.webp"
       },
       {
         name: "Coffee",
@@ -647,7 +654,7 @@
         rainfall_requirements: [150, 250],
         ph_range: [6.0, 6.5],
         yield_per_acre: 800,
-        image: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQANUaonQdOQLC0I6nTb2mXrwb3knd-HeAuNA&s"
       }
     ],
     best_markets: ["Bengaluru"],
@@ -666,7 +673,7 @@
         rainfall_requirements: [200, 300],
         ph_range: [4.5, 6.0],
         yield_per_acre: 1500,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://static.toiimg.com/photo/110183615.cms"
       },
       {
         name: "Coconut",
@@ -676,7 +683,7 @@
         rainfall_requirements: [100, 300],
         ph_range: [5.2, 8.0],
         yield_per_acre: 10000,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://www.jiomart.com/images/product/original/590000086/big-coconut-1-pc-approx-350-g-600-g-product-images-o590000086-p590000086-0-202408070949.jpg?im=Resize=(420,420)"
       }
     ],
     best_markets: ["Kochi"],
@@ -695,7 +702,7 @@
         rainfall_requirements: [60, 100],
         ph_range: [6.0, 7.5],
         yield_per_acre: 10,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9tRQqd3ydSbf7UF9TNFKtqYIVdAD0P9Bf6vA7GZsyFe2Q3yxPG6h2nj-aLnWi_yQDgzs&usqp=CAU"
       },
       {
         name: "Wheat",
@@ -705,7 +712,7 @@
         rainfall_requirements: [50, 100],
         ph_range: [6.0, 7.5],
         yield_per_acre: 19,
-        image: "https://images.unsplash.com/photo-1601593768793-21c6e6cc18b8"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFicsW1fD9qPBlWRhlBFd0ASiamvOswSgP6w&s"
       }
     ],
     best_markets: ["Indore"],
@@ -724,7 +731,7 @@
         rainfall_requirements: [50, 120],
         ph_range: [6.0, 7.0],
         yield_per_acre: 9,
-        image: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716"
+        image: "https://thumbs.dreamstime.com/b/process-making-cotton-raw-cotton-basket-66651270.jpg"
       },
       {
         name: "Sugarcane",
@@ -734,7 +741,7 @@
         rainfall_requirements: [150, 200],
         ph_range: [6.5, 7.5],
         yield_per_acre: 350,
-        image: "https://images.unsplash.com/photo-1594282418429-8095c5a2001b"
+        image: "https://cdn.pixabay.com/photo/2020/07/09/20/00/sugarcane-5388614_1280.jpg"
       }
     ],
     best_markets: ["Pune"],
@@ -753,7 +760,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 18,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Maize",
@@ -763,7 +770,7 @@
         rainfall_requirements: [60, 120],
         ph_range: [5.5, 7.0],
         yield_per_acre: 15,
-        image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoeAK_Kb2ZpDx3P-7i1N8E6kQQw1TCPr8xlg&s"
       }
     ],
     best_markets: ["Imphal"],
@@ -782,7 +789,7 @@
         rainfall_requirements: [50, 75],
         ph_range: [5.0, 6.5],
         yield_per_acre: 120,
-        image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655"
+        image: "https://t3.ftcdn.net/jpg/04/52/75/46/360_F_452754668_F8QX82iY9YCEeywoXa7KSLufO03eY4G3.jpg"
       },
       {
         name: "Rice",
@@ -792,7 +799,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 18,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       }
     ],
     best_markets: ["Shillong"],
@@ -811,7 +818,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 16,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Maize",
@@ -821,7 +828,7 @@
         rainfall_requirements: [60, 120],
         ph_range: [5.5, 7.0],
         yield_per_acre: 12,
-        image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoeAK_Kb2ZpDx3P-7i1N8E6kQQw1TCPr8xlg&s"
       }
     ],
     best_markets: ["Aizawl"],
@@ -840,7 +847,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 15,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Maize",
@@ -850,7 +857,7 @@
         rainfall_requirements: [60, 120],
         ph_range: [5.5, 7.0],
         yield_per_acre: 10,
-        image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoeAK_Kb2ZpDx3P-7i1N8E6kQQw1TCPr8xlg&s"
       }
     ],
     best_markets: ["Kohima"],
@@ -869,7 +876,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 22,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Pulses",
@@ -879,7 +886,7 @@
         rainfall_requirements: [40, 60],
         ph_range: [6.0, 7.5],
         yield_per_acre: 7,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://chrysalishigh.com/wp-content/uploads/2024/01/pulses.jpg"
       }
     ],
     best_markets: ["Bhubaneswar"],
@@ -898,7 +905,7 @@
         rainfall_requirements: [50, 100],
         ph_range: [6.0, 7.5],
         yield_per_acre: 22,
-        image: "https://images.unsplash.com/photo-1601593768793-21c6e6cc18b8"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFicsW1fD9qPBlWRhlBFd0ASiamvOswSgP6w&s"
       },
       {
         name: "Rice",
@@ -908,7 +915,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 26,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       }
     ],
     best_markets: ["Ludhiana"],
@@ -927,7 +934,7 @@
         rainfall_requirements: [40, 60],
         ph_range: [6.0, 7.5],
         yield_per_acre: 7,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://justorganik.com/wp-content/uploads/2024/04/bajra.png"
       },
       {
         name: "Wheat",
@@ -937,7 +944,7 @@
         rainfall_requirements: [50, 100],
         ph_range: [6.0, 7.5],
         yield_per_acre: 13,
-        image: "https://images.unsplash.com/photo-1601593768793-21c6e6cc18b8"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFicsW1fD9qPBlWRhlBFd0ASiamvOswSgP6w&s"
       }
     ],
     best_markets: ["Jaipur"],
@@ -956,7 +963,7 @@
         rainfall_requirements: [100, 200],
         ph_range: [5.5, 6.5],
         yield_per_acre: 5,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://media.istockphoto.com/id/518709136/photo/green-cardamom-pods-in-steel-bowl.jpg?s=612x612&w=0&k=20&c=uMfiFWLROWcsyeqG6zcUQb83nxo6VI5_o7aCQUiEmpw="
       },
       {
         name: "Rice",
@@ -966,7 +973,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 12,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       }
     ],
     best_markets: ["Gangtok"],
@@ -985,7 +992,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 23,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Sugarcane",
@@ -995,9 +1002,10 @@
         rainfall_requirements: [150, 200],
         ph_range: [6.5, 7.5],
         yield_per_acre: 320,
-        image: "https://images.unsplash.com/photo-1594282418429-8095c5a2001b"
+        image: "https://cdn.pixabay.com/photo/2020/07/09/20/00/sugarcane-5388614_1280.jpg"
       }
     ],
+    
     best_markets: ["Chennai"],
     climate: "Tropical",
     coordinates: [11.1271, 78.6569]
@@ -1014,7 +1022,7 @@
         rainfall_requirements: [50, 120],
         ph_range: [6.0, 7.0],
         yield_per_acre: 8,
-        image: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716"
+        image: "https://thumbs.dreamstime.com/b/process-making-cotton-raw-cotton-basket-66651270.jpg"
       },
       {
         name: "Rice",
@@ -1024,7 +1032,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 24,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       }
     ],
     best_markets: ["Hyderabad"],
@@ -1043,7 +1051,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 15,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       },
       {
         name: "Pineapple",
@@ -1053,7 +1061,7 @@
         rainfall_requirements: [100, 150],
         ph_range: [4.5, 6.5],
         yield_per_acre: 25,
-        image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"
+        image: "https://images.immediate.co.uk/production/volatile/sites/30/2024/06/Pineapple-01-5562ee3.jpg"
       }
     ],
     best_markets: ["Agartala"],
@@ -1072,7 +1080,7 @@
         rainfall_requirements: [50, 100],
         ph_range: [6.0, 7.5],
         yield_per_acre: 22,
-        image: "https://images.unsplash.com/photo-1601593768793-21c6e6cc18b8"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFicsW1fD9qPBlWRhlBFd0ASiamvOswSgP6w&s"
       },
       {
         name: "Sugarcane",
@@ -1082,7 +1090,7 @@
         rainfall_requirements: [150, 200],
         ph_range: [6.5, 7.5],
         yield_per_acre: 350,
-        image: "https://images.unsplash.com/photo-1594282418429-8095c5a2001b"
+        image: "https://cdn.pixabay.com/photo/2020/07/09/20/00/sugarcane-5388614_1280.jpg"
       }
     ],
     best_markets: ["Kanpur"],
@@ -1101,7 +1109,7 @@
         rainfall_requirements: [50, 100],
         ph_range: [6.0, 7.5],
         yield_per_acre: 12,
-        image: "https://images.unsplash.com/photo-1601593768793-21c6e6cc18b8"
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFicsW1fD9qPBlWRhlBFd0ASiamvOswSgP6w&s"
       },
       {
         name: "Rice",
@@ -1111,7 +1119,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 10,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       }
     ],
     best_markets: ["Dehradun"],
@@ -1130,7 +1138,7 @@
         rainfall_requirements: [150, 250],
         ph_range: [6.0, 7.5],
         yield_per_acre: 20,
-        image: "https://images.unsplash.com/photo-1586771107445-d3ca888129ce"
+        image: "https://static.fibre2fashion.com/Newsresource/images/286/shutterstock-1511119781_298399.jpg"
       },
       {
         name: "Potato",
@@ -1140,7 +1148,7 @@
         rainfall_requirements: [50, 75],
         ph_range: [5.0, 6.5],
         yield_per_acre: 120,
-        image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655"
+        image: "https://t3.ftcdn.net/jpg/04/52/75/46/360_F_452754668_F8QX82iY9YCEeywoXa7KSLufO03eY4G3.jpg"
       },
       {
         name: "Rice",
@@ -1150,7 +1158,7 @@
         rainfall_requirements: [150, 300],
         ph_range: [5.0, 6.5],
         yield_per_acre: 26,
-        image: "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+        image: "https://static.vecteezy.com/system/resources/thumbnails/037/349/469/small_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg"
       }
     ],
     best_markets: ["Kolkata"],
@@ -1747,7 +1755,7 @@
                 card.className = 'col-md-6 col-lg-3';
                 card.innerHTML = `
                     <div class="card state-card h-100">
-                        <div class="card-body">
+                        <div  class="card-body">
                             <h5 class="card-title">${state.name}</h5>
                             <p class="text-muted">${state.climate} Climate</p>
                             <hr>
@@ -1860,11 +1868,8 @@
             // Filter crops by season (simplified)
             const seasonType = season.includes('Kharif') ? 'Kharif' : 
                              season.includes('Rabi') ? 'Rabi' : 'Zaid';
-            
             const suitableCrops = state.major_crops.filter(crop => 
-                crop.seasons.includes(seasonType) && 
-                crop.ph_range[0] >= 5.5 && crop.ph_range[1] <= 7.5 // Simplified soil matching
-            );
+    crop.seasons.includes(seasonType));
 
             document.getElementById('resultPlaceholder').style.display = 'none';
             const resultsDiv = document.getElementById('recommendationResults');
