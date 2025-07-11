@@ -1,1 +1,1132 @@
-jheheiujfe
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriGuru | Smart Farming Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --agri-green: #2e7d32;
+            --agri-blue: #1565c0;
+            --agri-gold: #ff8f00;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .feature-card {
+            transition: transform 0.3s;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--agri-green);
+            margin-bottom: 1rem;
+        }
+        
+        .crop-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .crop-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .crop-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .weather-card {
+            background: linear-gradient(135deg, #56CCF2, #2F80ED);
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .state-card {
+            border-left: 5px solid var(--agri-green);
+            transition: all 0.3s;
+        }
+        
+        .state-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .iot-device {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .sensor-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .sensor-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .model-results {
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .progress-thin {
+            height: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <img src="https://cdn-icons-png.flaticon.com/512/3063/3063512.png" alt="Logo" width="40" height="40" class="d-inline-block align-top me-2">
+                AgriGuru
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#states">States</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#crops">Crops</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#iot">IoT Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#weather">Weather</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#market">Market</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-4">Smart Farming with IoT & AI</h1>
+            <p class="lead mb-5">Real-time monitoring and predictive analytics for precision agriculture</p>
+            <a href="#recommendation" class="btn btn-warning btn-lg px-4 me-2">Get Personalized Advice</a>
+            <a href="#iot" class="btn btn-outline-light btn-lg px-4">View IoT Dashboard</a>
+        </div>
+    </section>
+
+    <!-- States Section -->
+    <section id="states" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Indian States <span class="text-success">Crop Data</span></h2>
+            <div class="row g-4" id="statesContainer">
+                <!-- States will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- IoT Dashboard Section -->
+    <section id="iot" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">IoT <span class="text-success">Farm Monitoring</span></h2>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Connect Your Devices</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i> Connect your IoT devices to get real-time farm data
+                            </div>
+                            <form id="iotForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Device ID</label>
+                                    <input type="text" class="form-control" id="deviceId" placeholder="Enter device ID">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Connection Key</label>
+                                    <input type="password" class="form-control" id="deviceKey" placeholder="Enter security key">
+                                </div>
+                                <button type="button" class="btn btn-success w-100" id="connectDevice">
+                                    <i class="fas fa-plug me-2"></i>Connect Device
+                                </button>
+                            </form>
+                            <hr>
+                            <h5>Supported Devices</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    AgriSense Pro
+                                    <span class="badge bg-success rounded-pill">Recommended</span>
+                                </li>
+                                <li class="list-group-item">FarmBot Weather Station</li>
+                                <li class="list-group-item">SoilMaster 3000</li>
+                                <li class="list-group-item">CropGuard Monitor</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">Real-time Sensor Data</h4>
+                            <span class="badge bg-light text-success" id="connectionStatus">
+                                <i class="fas fa-circle-notch fa-spin me-1"></i>Disconnected
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="sensorData">
+                                <!-- Sensor data will be loaded here -->
+                                <div class="col-12 text-center py-5">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/3601/3601551.png" width="100" alt="IoT" class="mb-3">
+                                    <p>Connect your IoT device to view real-time sensor data</p>
+                                </div>
+                            </div>
+                            
+                            <div class="model-results mt-4" id="modelResults" style="display: none;">
+                                <h5><i class="fas fa-brain me-2"></i>AI Prediction Results</h5>
+                                <div class="mb-3">
+                                    <label>Crop Suitability Prediction</label>
+                                    <div class="progress progress-thin mb-2">
+                                        <div class="progress-bar bg-success" id="cropPredictionBar" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <small id="cropPredictionText">Analyzing sensor data...</small>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Disease Risk Assessment</label>
+                                    <div class="progress progress-thin mb-2">
+                                        <div class="progress-bar bg-danger" id="diseaseRiskBar" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <small id="diseaseRiskText">Analyzing sensor data...</small>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Irrigation Recommendation</label>
+                                    <div class="progress progress-thin mb-2">
+                                        <div class="progress-bar bg-info" id="irrigationBar" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <small id="irrigationText">Analyzing sensor data...</small>
+                                </div>
+                                <button class="btn btn-sm btn-success" id="refreshModel">
+                                    <i class="fas fa-sync-alt me-1"></i>Refresh Analysis
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crop Recommendation Section -->
+    <section id="recommendation" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Crop <span class="text-success">Recommendation</span></h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Enter Your Farm Details</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="cropForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Select State</label>
+                                    <select class="form-select" id="stateSelect">
+                                        <option value="">Select State</option>
+                                        <!-- Options will be dynamically loaded -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Soil Type</label>
+                                    <select class="form-select" id="soilType">
+                                        <option value="">Select Soil Type</option>
+                                        <option>Alluvial</option>
+                                        <option>Black (Regur)</option>
+                                        <option>Red</option>
+                                        <option>Laterite</option>
+                                        <option>Loamy</option>
+                                        <option>Sandy</option>
+                                        <option>Clayey</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Season</label>
+                                    <select class="form-select" id="season">
+                                        <option value="">Select Season</option>
+                                        <option>Kharif (June-October)</option>
+                                        <option>Rabi (November-April)</option>
+                                        <option>Zaid (March-June)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Land Area (acres)</label>
+                                    <input type="number" class="form-control" id="landArea" placeholder="Enter land area">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Current Temperature (°C)</label>
+                                    <input type="number" class="form-control" id="currentTemp" placeholder="Enter current temperature">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Soil Moisture (%)</label>
+                                    <input type="number" class="form-control" id="soilMoisture" placeholder="Enter soil moisture">
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">Get Recommendation</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Recommended Crops</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center py-4" id="resultPlaceholder">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3163/3163473.png" width="100" alt="Recommendation">
+                                <p class="mt-3">Fill the form to get crop recommendations</p>
+                            </div>
+                            <div id="recommendationResults" style="display: none;">
+                                <!-- Results will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weather Section -->
+    <section id="weather" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Weather <span class="text-success">Forecast</span></h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="weather-card card shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div>
+                                    <h3 class="mb-1">Today</h3>
+                                    <p class="mb-0" id="weatherLocation">Loading location...</p>
+                                </div>
+                                <div class="display-4" id="weatherTemp">--°C</div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-cloud-sun me-3 fa-2x"></i>
+                                <div>
+                                    <p class="mb-0" id="weatherCondition">Loading...</p>
+                                    <small id="weatherDetails">Humidity: --% | Wind: -- km/h</small>
+                                </div>
+                            </div>
+                            <div class="row text-center mt-4" id="weatherForecast">
+                                <!-- Forecast will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Agricultural Alerts</h4>
+                        </div>
+                        <div class="card-body" id="agriAlerts">
+                            <!-- Alerts will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Prices Section -->
+    <section id="market" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Market <span class="text-success">Prices</span></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Top Commodities</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="priceTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Crop</th>
+                                            <th>Price (₹/q)</th>
+                                            <th>Change</th>
+                                            <th>Best Market</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Prices will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Nearby Markets</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="marketMap" style="height: 300px; border-radius: 8px;"></div>
+                            <div class="mt-3">
+                                <h5>Transport Advisory</h5>
+                                <p id="transportAdvisory">Loading market data...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>AgriGuru</h5>
+                    <p>Smart farming solutions for the digital age.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#states" class="text-white">States</a></li>
+                        <li><a href="#crops" class="text-white">Crops</a></li>
+                        <li><a href="#iot" class="text-white">IoT Dashboard</a></li>
+                        <li><a href="#weather" class="text-white">Weather</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Farming Guides</a></li>
+                        <li><a href="#" class="text-white">Government Schemes</a></li>
+                        <li><a href="#" class="text-white">Research Papers</a></li>
+                        <li><a href="#" class="text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> New Delhi, India</li>
+                        <li><i class="fas fa-phone me-2"></i> +91 9876543210</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@agriguru.in</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2023 AgriGuru by DataVelopers. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // State-wise crop data
+        const statesData = [
+            {
+                "name": "Punjab",
+                "soil_types": ["Alluvial", "Loamy"],
+                "major_crops": [
+                    {
+                        "name": "Wheat",
+                        "scientific_name": "Triticum aestivum",
+                        "seasons": ["Rabi"],
+                        "temperature_range": [14, 21],
+                        "rainfall_requirements": [50, 100],
+                        "ph_range": [6.0, 7.5],
+                        "soil_moisture_range": [40, 70],
+                        "yield_per_acre": 18.5,
+                        "image": "https://images.unsplash.com/photo-1601593768793-21c6e6cc18b8"
+                    },
+                    {
+                        "name": "Rice",
+                        "scientific_name": "Oryza sativa",
+                        "seasons": ["Kharif"],
+                        "temperature_range": [22, 35],
+                        "rainfall_requirements": [150, 300],
+                        "ph_range": [5.0, 6.5],
+                        "soil_moisture_range": [60, 90],
+                        "yield_per_acre": 25.2,
+                        "image": "https://images.unsplash.com/photo-1604977047416-8e6b41a5c02d"
+                    }
+                ],
+                "best_markets": ["Anandpur Sahib", "Ludhiana", "Amritsar"],
+                "climate": "Continental",
+                "coordinates": [31.1471, 75.3412]
+            },
+            {
+                "name": "Maharashtra",
+                "soil_types": ["Black", "Laterite"],
+                "major_crops": [
+                    {
+                        "name": "Cotton",
+                        "scientific_name": "Gossypium hirsutum",
+                        "seasons": ["Kharif"],
+                        "temperature_range": [21, 30],
+                        "rainfall_requirements": [50, 120],
+                        "ph_range": [6.0, 7.0],
+                        "soil_moisture_range": [30, 60],
+                        "yield_per_acre": 8.7,
+                        "image": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716"
+                    },
+                    {
+                        "name": "Sugarcane",
+                        "scientific_name": "Saccharum officinarum",
+                        "seasons": ["Kharif", "Rabi"],
+                        "temperature_range": [25, 32],
+                        "rainfall_requirements": [150, 200],
+                        "ph_range": [6.5, 7.5],
+                        "soil_moisture_range": [50, 80],
+                        "yield_per_acre": 350,
+                        "image": "https://images.unsplash.com/photo-1594282418429-8095c5a2001b"
+                    }
+                ],
+                "best_markets": ["Nagpur", "Pune", "Kolhapur"],
+                "climate": "Tropical",
+                "coordinates": [19.7515, 75.7139]
+            },
+            {
+                "name": "Karnataka",
+                "soil_types": ["Red", "Black", "Lateritic"],
+                "major_crops": [
+                    {
+                        "name": "Ragi (Finger Millet)",
+                        "scientific_name": "Eleusine coracana",
+                        "seasons": ["Kharif"],
+                        "temperature_range": [20, 30],
+                        "rainfall_requirements": [50, 100],
+                        "ph_range": [5.5, 7.0],
+                        "soil_moisture_range": [30, 60],
+                        "yield_per_acre": 8,
+                        "image": "https://images.unsplash.com/photo-1595433562696-a39b1b5c9a0e"
+                    },
+                    {
+                        "name": "Coffee",
+                        "scientific_name": "Coffea arabica",
+                        "seasons": ["Perennial"],
+                        "temperature_range": [15, 28],
+                        "rainfall_requirements": [150, 250],
+                        "ph_range": [6.0, 6.5],
+                        "soil_moisture_range": [40, 70],
+                        "yield_per_acre": 800,
+                        "image": "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f"
+                    }
+                ],
+                "best_markets": ["Bengaluru", "Mysuru", "Chikmagalur"],
+                "climate": "Tropical",
+                "coordinates": [15.3173, 75.7139]
+            },
+            {
+                "name": "West Bengal",
+                "soil_types": ["Alluvial", "Laterite"],
+                "major_crops": [
+                    {
+                        "name": "Jute",
+                        "scientific_name": "Corchorus olitorius",
+                        "seasons": ["Kharif"],
+                        "temperature_range": [24, 37],
+                        "rainfall_requirements": [150, 250],
+                        "ph_range": [6.0, 7.5],
+                        "soil_moisture_range": [50, 80],
+                        "yield_per_acre": 20,
+                        "image": "https://images.unsplash.com/photo-1586771107445-d3ca888129ce"
+                    },
+                    {
+                        "name": "Potato",
+                        "scientific_name": "Solanum tuberosum",
+                        "seasons": ["Rabi"],
+                        "temperature_range": [15, 20],
+                        "rainfall_requirements": [50, 75],
+                        "ph_range": [5.0, 6.5],
+                        "soil_moisture_range": [50, 70],
+                        "yield_per_acre": 120,
+                        "image": "https://images.unsplash.com/photo-1518977676601-b53f82aba655"
+                    }
+                ],
+                "best_markets": ["Kolkata", "Siliguri", "Burdwan"],
+                "climate": "Subtropical",
+                "coordinates": [22.9868, 87.8550]
+            }
+        ];
+
+        // Market price data
+        const marketPrices = [
+            { crop: "Wheat", price: 2150, change: 2.5, market: "Delhi" },
+            { crop: "Rice", price: 1850, change: -1.2, market: "Punjab" },
+            { crop: "Cotton", price: 6700, change: 4.1, market: "Gujarat" },
+            { crop: "Sugarcane", price: 3200, change: 0, market: "Maharashtra" },
+            { crop: "Ragi", price: 3500, change: 1.8, market: "Karnataka" },
+            { crop: "Jute", price: 4200, change: 3.2, market: "West Bengal" }
+        ];
+
+        // Weather data (mock)
+        const weatherData = {
+            location: "New Delhi",
+            temp: 32,
+            condition: "Partly Cloudy",
+            humidity: 65,
+            wind: 12,
+            forecast: [
+                { day: "Mon", icon: "sun", temp: 34 },
+                { day: "Tue", icon: "cloud-rain", temp: 29 },
+                { day: "Wed", icon: "cloud", temp: 31 },
+                { day: "Thu", icon: "sun", temp: 35 },
+                { day: "Fri", icon: "sun", temp: 36 }
+            ],
+            alerts: [
+                { type: "warning", title: "Heat Wave Alert", message: "Temperatures expected to rise above 40°C next week" },
+                { type: "info", title: "Rain Forecast", message: "Expected rainfall of 50mm in next 48 hours" },
+                { type: "success", title: "Sowing Advisory", message: "Current conditions ideal for sowing maize and cotton" }
+            ]
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStates();
+            loadStateOptions();
+            loadWeatherData();
+            loadMarketPrices();
+            initMap();
+            setupForm();
+            setupIoT();
+        });
+
+        // Load states data into the page
+        function loadStates() {
+            const container = document.getElementById('statesContainer');
+            container.innerHTML = '';
+
+            statesData.forEach(state => {
+                const card = document.createElement('div');
+                card.className = 'col-md-6 col-lg-3';
+                card.innerHTML = `
+                    <div class="card state-card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">${state.name}</h5>
+                            <p class="text-muted">${state.climate} Climate</p>
+                            <hr>
+                            <h6>Major Crops:</h6>
+                            <ul class="list-unstyled">
+                                ${state.major_crops.map(crop => `<li>• ${crop.name}</li>`).join('')}
+                            </ul>
+                            <h6 class="mt-3">Best Markets:</h6>
+                            <p>${state.best_markets.join(', ')}</p>
+                            <button class="btn btn-sm btn-outline-success view-state" data-state="${state.name}">View Details</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Add event listeners to view buttons
+            document.querySelectorAll('.view-state').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const stateName = this.getAttribute('data-state');
+                    viewStateDetails(stateName);
+                });
+            });
+        }
+
+        // Load states into the dropdown
+        function loadStateOptions() {
+            const select = document.getElementById('stateSelect');
+            statesData.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state.name;
+                option.textContent = state.name;
+                select.appendChild(option);
+            });
+        }
+
+        // View state details
+        function viewStateDetails(stateName) {
+            const state = statesData.find(s => s.name === stateName);
+            if (!state) return;
+
+            const resultsDiv = document.getElementById('recommendationResults');
+            resultsDiv.style.display = 'block';
+            document.getElementById('resultPlaceholder').style.display = 'none';
+
+            resultsDiv.innerHTML = `
+                <div class="alert alert-success">
+                    <h4>${state.name} - Agricultural Profile</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5>Climate & Soil</h5>
+                                <p><strong>Climate:</strong> ${state.climate}</p>
+                                <p><strong>Soil Types:</strong> ${state.soil_types.join(', ')}</p>
+                                <p><strong>Best Markets:</strong> ${state.best_markets.join(', ')}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5>Major Crops</h5>
+                                <ul class="list-group">
+                                    ${state.major_crops.map(crop => `
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            ${crop.name}
+                                            <span class="badge bg-success rounded-pill">${crop.seasons.join('/')}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('resultPlaceholder').style.display='block'; document.getElementById('recommendationResults').style.display='none'">Back</button>
+                </div>
+            `;
+
+            // Scroll to recommendations
+            document.getElementById('recommendation').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Setup form submission
+        function setupForm() {
+            document.getElementById('cropForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const state = document.getElementById('stateSelect').value;
+                const soil = document.getElementById('soilType').value;
+                const season = document.getElementById('season').value;
+                const area = document.getElementById('landArea').value;
+                const temp = document.getElementById('currentTemp').value;
+                const moisture = document.getElementById('soilMoisture').value;
+                
+                if (!state || !soil || !season) {
+                    alert('Please fill all required fields');
+                    return;
+                }
+                
+                getRecommendations(state, soil, season, area, temp, moisture);
+            });
+        }
+
+        // Get crop recommendations
+        function getRecommendations(stateName, soilType, season, area, temp, moisture) {
+            const state = statesData.find(s => s.name === stateName);
+            if (!state) return;
+
+            // Filter crops by season (simplified)
+            const seasonType = season.includes('Kharif') ? 'Kharif' : 
+                             season.includes('Rabi') ? 'Rabi' : 'Zaid';
+            
+            // Score crops based on suitability (including IoT data if available)
+            const scoredCrops = state.major_crops.map(crop => {
+                let score = 0;
+                
+                // Season match
+                if (crop.seasons.includes(seasonType)) score += 40;
+                
+                // Soil type match
+                if (state.soil_types.includes(soilType)) score += 20;
+                
+                // Temperature match (if provided)
+                if (temp) {
+                    const tempNum = parseFloat(temp);
+                    if (tempNum >= crop.temperature_range[0] && tempNum <= crop.temperature_range[1]) {
+                        score += 20;
+                    } else {
+                        // Penalize if outside range
+                        const midRange = (crop.temperature_range[0] + crop.temperature_range[1]) / 2;
+                        const diff = Math.abs(tempNum - midRange);
+                        score -= Math.min(15, diff * 0.5);
+                    }
+                }
+                
+                // Soil moisture match (if provided)
+                if (moisture) {
+                    const moistureNum = parseFloat(moisture);
+                    if (moistureNum >= crop.soil_moisture_range[0] && moistureNum <= crop.soil_moisture_range[1]) {
+                        score += 20;
+                    } else {
+                        // Penalize if outside range
+                        const midRange = (crop.soil_moisture_range[0] + crop.soil_moisture_range[1]) / 2;
+                        const diff = Math.abs(moistureNum - midRange);
+                        score -= Math.min(15, diff * 0.5);
+                    }
+                }
+                
+                return {
+                    ...crop,
+                    score: Math.max(0, Math.min(100, score)) // Ensure score is between 0-100
+                };
+            }).sort((a, b) => b.score - a.score); // Sort by score descending
+
+            document.getElementById('resultPlaceholder').style.display = 'none';
+            const resultsDiv = document.getElementById('recommendationResults');
+            resultsDiv.style.display = 'block';
+
+            if (scoredCrops.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        <h4>No crops found matching your criteria</h4>
+                        <p>Try adjusting your soil type or season selection</p>
+                    </div>
+                `;
+                return;
+            }
+
+            resultsDiv.innerHTML = `
+                <div class="alert alert-success">
+                    <h4>Top Recommendations for ${stateName}</h4>
+                    <p>Based on ${soilType} soil in ${season} season</p>
+                    ${temp ? `<p>Current temperature: ${temp}°C | Soil moisture: ${moisture || '--'}%</p>` : ''}
+                </div>
+                <div class="row g-3">
+                    ${scoredCrops.map((crop, index) => `
+                        <div class="col-md-${scoredCrops.length > 1 ? '6' : '12'}">
+                            <div class="card mb-3">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="${crop.image}" class="img-fluid rounded-start h-100" alt="${crop.name}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${crop.name} ${index === 0 ? '<span class="badge bg-warning">Best Match</span>' : ''}</h5>
+                                            <p class="card-text">${crop.scientific_name}</p>
+                                            <p><strong>Suitability Score:</strong> 
+                                                <div class="progress" style="height: 10px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: ${crop.score}%" aria-valuenow="${crop.score}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small>${crop.score.toFixed(0)}/100</small>
+                                            </p>
+                                            <p><strong>Season:</strong> ${crop.seasons.join(', ')}</p>
+                                            ${area ? `<p><strong>Expected Yield:</strong> ${(crop.yield_per_acre * area).toFixed(1)} kg</p>` : ''}
+                                            <small class="text-muted">Ideal Temp: ${crop.temperature_range[0]}°C - ${crop.temperature_range[1]}°C | Soil Moisture: ${crop.soil_moisture_range[0]}%-${crop.soil_moisture_range[1]}% | pH: ${crop.ph_range[0]}-${crop.ph_range[1]}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-sm btn-outline-success">View Detailed Cultivation Guide</button>
+                </div>
+            `;
+        }
+
+        // Load weather data
+        function loadWeatherData() {
+            const weather = weatherData;
+            
+            document.getElementById('weatherLocation').textContent = weather.location;
+            document.getElementById('weatherTemp').textContent = `${weather.temp}°C`;
+            document.getElementById('weatherCondition').textContent = weather.condition;
+            document.getElementById('weatherDetails').textContent = `Humidity: ${weather.humidity}% | Wind: ${weather.wind} km/h`;
+            
+            const forecastDiv = document.getElementById('weatherForecast');
+            forecastDiv.innerHTML = weather.forecast.map(day => `
+                <div class="col">
+                    <p class="mb-1">${day.day}</p>
+                    <i class="fas fa-${day.icon} mb-1"></i>
+                    <p class="mb-0">${day.temp}°C</p>
+                </div>
+            `).join('');
+            
+            const alertsDiv = document.getElementById('agriAlerts');
+            alertsDiv.innerHTML = weather.alerts.map(alert => `
+                <div class="alert alert-${alert.type}">
+                    <h5><i class="fas fa-${alert.type === 'warning' ? 'exclamation-triangle' : alert.type === 'info' ? 'cloud-rain' : 'seedling'} me-2"></i>${alert.title}</h5>
+                    <p class="mb-0">${alert.message}</p>
+                </div>
+            `).join('');
+        }
+
+        // Load market prices
+        function loadMarketPrices() {
+            const tableBody = document.querySelector('#priceTable tbody');
+            tableBody.innerHTML = marketPrices.map(item => `
+                <tr>
+                    <td>${item.crop}</td>
+                    <td>${item.price.toLocaleString()}</td>
+                    <td class="${item.change > 0 ? 'text-success' : item.change < 0 ? 'text-danger' : 'text-warning'}">
+                        ${item.change > 0 ? '↑' : item.change < 0 ? '↓' : '↔'} ${Math.abs(item.change)}%
+                    </td>
+                    <td>${item.market}</td>
+                </tr>
+            `).join('');
+            
+            document.getElementById('transportAdvisory').textContent = 
+                `Current best rates in ${marketPrices[0].market} for ${marketPrices[0].crop.toLowerCase()}. Expected ${marketPrices[0].change}% price change next week.`;
+        }
+
+        // Initialize map
+        function initMap() {
+            const map = L.map('marketMap').setView([20.5937, 78.9629], 5);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            // Add markers for each state
+            statesData.forEach(state => {
+                if (state.coordinates) {
+                    L.marker(state.coordinates)
+                        .addTo(map)
+                        .bindPopup(`<b>${state.name}</b><br>Major crops: ${state.major_crops.map(c => c.name).join(', ')}`);
+                }
+            });
+        }
+        
+        // Setup IoT functionality
+        function setupIoT() {
+            // Connect device button
+            document.getElementById('connectDevice').addEventListener('click', function() {
+                const deviceId = document.getElementById('deviceId').value;
+                const deviceKey = document.getElementById('deviceKey').value;
+                
+                if (!deviceId || !deviceKey) {
+                    alert('Please enter device ID and connection key');
+                    return;
+                }
+                
+                // Simulate device connection
+                connectIoTDevice(deviceId, deviceKey);
+            });
+            
+            // Refresh model button
+            document.getElementById('refreshModel').addEventListener('click', function() {
+                runPredictionModel();
+            });
+        }
+        
+        // Simulate IoT device connection
+        function connectIoTDevice(deviceId, deviceKey) {
+            const statusElement = document.getElementById('connectionStatus');
+            statusElement.innerHTML = '<i class="fas fa-circle-notch fa-spin me-1"></i>Connecting...';
+            
+            // Simulate connection delay
+            setTimeout(() => {
+                statusElement.innerHTML = '<i class="fas fa-check-circle me-1"></i>Connected';
+                statusElement.className = 'badge bg-light text-success';
+                
+                // Load mock sensor data
+                loadSensorData();
+                
+                // Show model results
+                document.getElementById('modelResults').style.display = 'block';
+                
+                // Run prediction model
+                runPredictionModel();
+                
+                // Start periodic updates
+                setInterval(updateSensorData, 5000);
+            }, 2000);
+        }
+        
+        // Load initial sensor data
+        function loadSensorData() {
+            const sensorData = {
+                temperature: 28.5,
+                humidity: 65,
+                soilMoisture: 42,
+                soilPh: 6.8,
+                lightIntensity: 85000,
+                battery: 87
+            };
+            
+            updateSensorUI(sensorData);
+        }
+        
+        // Update sensor data with small random variations
+        function updateSensorData() {
+            const currentData = {
+                temperature: parseFloat(document.getElementById('sensorTemp').textContent),
+                humidity: parseFloat(document.getElementById('sensorHumidity').textContent),
+                soilMoisture: parseFloat(document.getElementById('sensorMoisture').textContent),
+                soilPh: parseFloat(document.getElementById('sensorPh').textContent),
+                lightIntensity: parseInt(document.getElementById('sensorLight').textContent),
+                battery: parseInt(document.getElementById('sensorBattery').textContent.replace('%', ''))
+            };
+            
+            // Apply small random changes
+            const newData = {
+                temperature: (currentData.temperature + (Math.random() * 2 - 1)).toFixed(1),
+                humidity: Math.max(0, Math.min(100, currentData.humidity + (Math.random() * 4 - 2))).toFixed(0),
+                soilMoisture: Math.max(0, Math.min(100, currentData.soilMoisture + (Math.random() * 5 - 2.5))).toFixed(0),
+                soilPh: (currentData.soilPh + (Math.random() * 0.2 - 0.1)).toFixed(1),
+                lightIntensity: Math.max(0, currentData.lightIntensity + (Math.random() * 2000 - 1000))).toFixed(0),
+                battery: Math.max(0, Math.min(100, currentData.battery - (Math.random() * 2))).toFixed(0)
+            };
+            
+            updateSensorUI(newData);
+            
+            // Run prediction model if changes are significant
+            if (Math.abs(newData.temperature - currentData.temperature) > 0.5 || 
+                Math.abs(newData.soilMoisture - currentData.soilMoisture) > 3) {
+                runPredictionModel();
+            }
+        }
+        
+        // Update sensor UI
+        function updateSensorUI(data) {
+            document.getElementById('sensorData').innerHTML = `
+                <div class="col-md-4">
+                    <div class="iot-device">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="sensor-value">${data.temperature}°C</div>
+                                <div class="sensor-label">Temperature</div>
+                            </div>
+                            <i class="fas fa-temperature-high fa-2x text-danger"></i>
+                        </div>
+                        <small id="sensorTemp" class="d-none">${data.temperature}</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="iot-device">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="sensor-value">${data.humidity}%</div>
+                                <div class="sensor-label">Air Humidity</div>
+                            </div>
+                            <i class="fas fa-water fa-2x text-info"></i>
+                        </div>
+                        <small id="sensorHumidity" class="d-none">${data.humidity}</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="iot-device">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="sensor-value">${data.soilMoisture}%</div>
+                                <div class="sensor-label">Soil Moisture</div>
+                            </div>
+                            <i class="fas fa-tint fa-2x text-primary"></i>
+                        </div>
+                        <small id="sensorMoisture" class="d-none">${data.soilMoisture}</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="iot-device">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="sensor-value">${data.soilPh}</div>
+                                <div class="sensor-label">Soil pH</div>
+                            </div>
+                            <i class="fas fa-flask fa-2x text-warning"></i>
+                        </div>
+                        <small id="sensorPh" class="d-none">${data.soilPh}</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="iot-device">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="sensor-value">${data.lightIntensity}</div>
+                                <div class="sensor-label">Light (lux)</div>
+                            </div>
+                            <i class="fas fa-sun fa-2x text-warning"></i>
+                        </div>
+                        <small id="sensorLight" class="d-none">${data.lightIntensity}</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="iot-device">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="sensor-value">${data.battery}%</div>
+                                <div class="sensor-label">Battery</div>
+                            </div>
+                            <i class="fas fa-battery-three-quarters fa-2x text-success"></i>
+                        </div>
+                        <small id="sensorBattery" class="d-none">${data.battery}%</small>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Run prediction model based on sensor data
+        function runPredictionModel() {
+            const temp = parseFloat(document.getElementById('sensorTemp').textContent);
+            const moisture = parseFloat(document.getElementById('sensorMoisture').textContent);
+            const ph = parseFloat(document.getElementById('sensorPh').textContent);
+            
+            // Simulate model processing
+            document.getElementById('cropPredictionText').textContent = "Processing sensor data...";
+            document.getElementById('diseaseRiskText').textContent = "Analyzing conditions...";
+            document.getElementById('irrigationText').textContent = "Calculating water needs...";
+            
+            // Simulate delay for model processing
+            setTimeout(() => {
+                // Calculate crop suitability score (mock)
+                const cropScore = Math.min(100, 70 + (temp - 25) * 2 + (moisture - 50) * 0.5);
+                
+                // Calculate disease risk (mock)
+                const diseaseRisk = moisture > 70 ? Math.min(100, 60 + (moisture - 70) * 2) : 
+                                     temp > 30 ? 50 : 30;
+                
+                // Calculate irrigation recommendation (mock)
+                const irrigationRec = moisture < 40 ? 90 : 
+                                      moisture < 60 ? 50 : 10;
+                
+                // Update UI with results
+                document.getElementById('cropPredictionBar').style.width = `${cropScore}%`;
+                document.getElementById('cropPredictionText').textContent = 
+                    `Current conditions are ${cropScore > 75 ? 'excellent' : cropScore > 50 ? 'good' : 'fair'} for most crops`;
+                
+                document.getElementById('diseaseRiskBar').style.width = `${diseaseRisk}%`;
+                document.getElementById('diseaseRiskText').textContent = 
+                    diseaseRisk > 70 ? 'High risk of fungal diseases - consider fungicide' :
+                    diseaseRisk > 40 ? 'Moderate disease risk - monitor closely' :
+                    'Low disease risk - normal conditions';
+                
+                document.getElementById('irrigationBar').style.width = `${irrigationRec}%`;
+                document.getElementById('irrigationText').textContent = 
+                    irrigationRec > 70 ? 'Immediate irrigation recommended' :
+                    irrigationRec > 40 ? 'Moderate irrigation needed soon' :
+                    'Adequate moisture - no irrigation needed';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
